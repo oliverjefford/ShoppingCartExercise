@@ -33,6 +33,7 @@ namespace ShoppingCartExercise.Controllers
             {
                 OfferType = offerForm.OfferType,
                 OfferValue = offerForm.OfferValue,
+                Quantity = offerForm.OfferQuantity,
                 ProductBarcode = offerForm.ProductBarcode
             };
             OfferRepository.Add(offer);

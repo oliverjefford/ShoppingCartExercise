@@ -7,6 +7,7 @@ namespace ShoppingCartExercise.Models.DatabaseModels
         public int Id { get; set; }
         public OfferType OfferType { get; set; }
         public int OfferValue { get; set; }
+        public int Quantity { get; set; }
         public string ProductBarcode { get; set; }
         public virtual Product Product { get; set; }
     }

@@ -19,7 +19,7 @@ namespace ShoppingCartExercise.Test
         {
             // Arrange
             var product = new Product { Barcode = "Apple", Price = 50 };
-            var offer = new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, ProductBarcode = "Apple", Product = product };
+            var offer = new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, Quantity = 3, ProductBarcode = "Apple", Product = product };
             var mockDatabaseContext = new Mock<ShoppingCartDatabaseContext>();
             var mockOfferSet = CreateMockDbSet(new List<Offer>());
             var mockProductSet = CreateMockDbSet(new List<Product> { product });
@@ -39,7 +39,7 @@ namespace ShoppingCartExercise.Test
         public void AddDuplicateOfferThrowsException()
         {
             // Arrange
-            var offer = new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, ProductBarcode = "Apple" };
+            var offer = new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, Quantity = 3, ProductBarcode = "Apple" };
             var offers = new List<Offer> { offer };
             var mockDbSet = CreateMockDbSet(offers);
             var mockDatabaseContext = new Mock<ShoppingCartDatabaseContext>();
@@ -55,7 +55,7 @@ namespace ShoppingCartExercise.Test
         public void CanRemoveOffer()
         {
             // Arrange
-            var offers = new List<Offer> { new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, ProductBarcode = "Apple" } };
+            var offers = new List<Offer> { new Offer { Id = 1, OfferType = OfferType.BulkOffer, OfferValue = 120, Quantity = 3, ProductBarcode = "Apple" } };
             var mockOfferSet = CreateMockDbSet(offers);
             var mockDatabaseContext = new Mock<ShoppingCartDatabaseContext>();
             mockDatabaseContext.Setup(r => r.Offers).Returns(mockOfferSet.Object);

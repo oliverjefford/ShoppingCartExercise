@@ -6,6 +6,7 @@ namespace ShoppingCartExercise.Models.FormModels
     {
         public OfferType OfferType { get; set; }
         public int OfferValue { get; set; }
+        public int OfferQuantity { get; set; }
         public string ProductBarcode { get; set; }
     }
 }

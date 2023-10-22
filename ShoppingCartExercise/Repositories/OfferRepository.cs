@@ -23,6 +23,7 @@ namespace ShoppingCartExercise.Repositories
         {
             Offer existingOffer = DatabaseContext.Offers.FirstOrDefault(o => o.OfferType == offer.OfferType
                                                                           && o.OfferValue == offer.OfferValue
+                                                                          && o.Quantity == offer.Quantity
                                                                           && o.ProductBarcode == offer.ProductBarcode);
             if (existingOffer != null)
                 throw new InvalidOperationException($"Offer for product '{offer.ProductBarcode}' already exists");
