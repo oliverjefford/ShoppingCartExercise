@@ -6,6 +6,7 @@ namespace ShoppingCartExercise.DatabaseContext
     public class ShoppingCartDatabaseContext : DbContext
     {
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Offer> Offers { get; set; }
 
         public ShoppingCartDatabaseContext()
         {
