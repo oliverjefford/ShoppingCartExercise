@@ -41,7 +41,8 @@ namespace ShoppingCartExercise.Repositories
                     ProductBarcode = barcode,
                     Product = product,
                     OfferId = offer?.Id,
-                    Offer = offer
+                    Offer = offer,
+                    Quantity = 1
                 };
                 DatabaseContext.Baskets.Add(basketItem);
             }
