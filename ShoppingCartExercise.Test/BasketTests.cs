@@ -31,10 +31,11 @@ namespace ShoppingCartExercise.Test
             var basketRepository = new BasketRepository(mockDatabaseContext.Object, mockLogger.Object);
             // Act
             basketRepository.AddItemToBasket(1, "Apple");
-            // Assert
+            // Assertr
             mockDatabaseContext.Verify(r => r.SaveChanges(), Times.Once);
             mockBasketSet.Verify(r => r.Add(It.IsAny<Basket>()), Times.Once);
             Assert.AreEqual(1, mockBasketSet.Object.Count());
+            Assert.AreEqual(1, mockBasketSet.Object.First().Quantity);
         }
         [TestMethod]
         public void CanAddDuplicateItemToBasket()

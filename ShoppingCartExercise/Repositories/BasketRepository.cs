@@ -47,7 +47,7 @@ namespace ShoppingCartExercise.Repositories
                 DatabaseContext.Baskets.Add(basketItem);
             }
             else
-                basketItems.First().Quantity++;
+                duplicateProducts.First().Quantity++;
             DatabaseContext.SaveChanges();
         }
         public void RemoveItemFromBasket(int basketId, string barcode)
