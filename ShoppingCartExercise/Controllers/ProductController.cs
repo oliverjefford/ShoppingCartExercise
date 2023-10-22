@@ -18,21 +18,24 @@ namespace ShoppingCartExercise.Controllers
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet(Name = "[controller]/GetAll")]
+        [HttpGet]
+        [Route("get-products")]
         public IActionResult GetProducts()
         {
             List<Product> allProducts = ProductRepository.GetAll();
             return Ok(allProducts);
         }
 
-        [HttpPost(Name = "[controller]/Create")]
+        [HttpPost]
+        [Route("add-products")]
         public IActionResult AddProduct([FromBody] Product product)
         {
             ProductRepository.Add(product);
             return Ok();
         }
 
-        [HttpDelete(Name = "[controller]/Remove")]
+        [HttpDelete]
+        [Route("remove-product")]
         public IActionResult Delete(string barcode)
         {
             ProductRepository.RemoveProduct(barcode);

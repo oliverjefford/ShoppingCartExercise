@@ -7,6 +7,7 @@ namespace ShoppingCartExercise.Repositories
         void AddItemToBasket(int basketId, string barcode);
         int CalculateTotal(int basketId);
         List<Basket> GetBasket(int basketId);
+        List<Basket> GetBaskets();
         void RemoveItemFromBasket(int basketId, string barcode);
     }
 }

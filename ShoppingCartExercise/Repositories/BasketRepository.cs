@@ -1,4 +1,5 @@
-﻿using ShoppingCartExercise.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCartExercise.DatabaseContext;
 using ShoppingCartExercise.Enums;
 using ShoppingCartExercise.Models.DatabaseModels;
 using System.Text;
@@ -16,9 +17,13 @@ namespace ShoppingCartExercise.Repositories
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        public List<Basket> GetBaskets()
+        {
+            return DatabaseContext.Baskets.Include(b => b.Product).Include(b => b.Offer).ToList();
+        }
         public List<Basket> GetBasket(int basketId)
         {
-            return DatabaseContext.Baskets.Where(bi => bi.Id == basketId).ToList();
+            return DatabaseContext.Baskets.Where(bi => bi.Id == basketId).Include(b => b.Product).Include(b => b.Offer).ToList();
         }
         public void AddItemToBasket(int basketId, string barcode)
         {
@@ -62,7 +67,7 @@ namespace ShoppingCartExercise.Repositories
         public int CalculateTotal(int basketId)
         {
             int total = 0;
-            List<Basket> basketItems = DatabaseContext.Baskets.Where(bi => bi.Id == basketId).ToList();
+            List<Basket> basketItems = GetBasket(basketId);
             if (!basketItems.Any())
                 throw new InvalidOperationException($"No basket exists for ID '{basketId}'");
             var basketItemsNoOffers = basketItems.Where(bi => bi.Offer == null).ToList();

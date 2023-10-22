@@ -19,14 +19,16 @@ namespace ShoppingCartExercise.Controllers
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpGet(Name = "[controller]/GetAll")]
+        [HttpGet]
+        [Route("get-offers")]
         public IActionResult GetOffers()
         {
             List<Offer> allOffers = OfferRepository.GetAll();
             return Ok(allOffers);
         }
 
-        [HttpPost(Name = "[controller]/Create")]
+        [HttpPost]
+        [Route("add-offer")]
         public IActionResult AddOffer([FromBody] OfferForm offerForm)
         {
             Offer offer = new Offer()
@@ -40,7 +42,8 @@ namespace ShoppingCartExercise.Controllers
             return Ok();
         }
 
-        [HttpDelete(Name = "[controller]/Remove")]
+        [HttpDelete]
+        [Route("remove-offer")]
         public IActionResult Delete(int offerId)
         {
             OfferRepository.Remove(offerId);

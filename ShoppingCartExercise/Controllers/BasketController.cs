@@ -20,6 +20,12 @@ namespace ShoppingCartExercise.Controllers
         }
 
         [HttpGet]
+        [Route("get-baskets")]
+        public List<IGrouping<int, Basket>> GetBaskets()
+        {
+            return BasketRepository.GetBaskets().GroupBy(b => b.Id).ToList();
+        }
+        [HttpGet]
         [Route("get-basket")]
         public IActionResult GetBasket(int basketId)
         {
