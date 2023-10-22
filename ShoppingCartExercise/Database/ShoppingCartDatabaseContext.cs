@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCartExercise.Models.DatabaseModels;
 
 namespace ShoppingCartExercise.DatabaseContext
 {
     public class ShoppingCartDatabaseContext : DbContext
     {
+        public virtual DbSet<Product> Products { get; set; }
 
         public ShoppingCartDatabaseContext()
         {
