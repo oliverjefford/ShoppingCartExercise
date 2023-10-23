@@ -31,10 +31,13 @@ namespace ShoppingCartExercise.Repositories
             if (product == null)
                 throw new InvalidOperationException($"Product does not exist for barcode '{barcode}'");
             List<Basket> basketItems = DatabaseContext.Baskets.Where(b => b.Id == basketId).ToList();
-            List<Basket> duplicateProducts = basketItems.Where(bi => bi.ProductBarcode == barcode).ToList();
+            List<Basket> duplicateProducts = basketItems.Where(bi => bi.ProductBarcode.ToLower() == barcode.ToLower()).ToList();
             if (!duplicateProducts.Any())
             {
+                // Add new basket item entry as item not already in basket
                 Offer offer = DatabaseContext.Offers.FirstOrDefault(o => o.ProductBarcode == barcode);
+                if (basketId == 0)
+                    basketId = DatabaseContext.Baskets.Max(b => b.Id) + 1;
                 Basket basketItem = new Basket
                 {
                     Id = basketId,
@@ -56,9 +59,9 @@ namespace ShoppingCartExercise.Repositories
             if (product == null)
                 throw new InvalidOperationException($"Product with barcode '{barcode}' does not exist");
             List<Basket> basketItems = DatabaseContext.Baskets.Where(bi => bi.Id == basketId).ToList();
-            if (!basketItems.Any(bi => bi.ProductBarcode == barcode))
+            if (!basketItems.Any(bi => bi.ProductBarcode.ToLower() == barcode.ToLower()))
                 throw new InvalidOperationException($"Product with barcode '{barcode}' is not in the basket");
-            Basket basketItem = basketItems.First(bi => bi.ProductBarcode == barcode);
+            Basket basketItem = basketItems.First(bi => bi.ProductBarcode.ToLower() == barcode.ToLower());
             if (basketItem.Quantity > 1)
                 basketItem.Quantity--;
             else
@@ -72,9 +75,11 @@ namespace ShoppingCartExercise.Repositories
             if (!basketItems.Any())
                 throw new InvalidOperationException($"No basket exists for ID '{basketId}'");
             var basketItemsNoOffers = basketItems.Where(bi => bi.Offer == null).ToList();
+            // Calculate subtotal of products without offers
             foreach (var item in basketItemsNoOffers)
                 total += (item.Product.Price * item.Quantity);
             var basketItemsWithOffers = basketItems.Where(bi => bi.Offer != null).ToList();
+            // Calculate subtotal of products with potential offers
             foreach (var item in basketItemsWithOffers)
             {
                 switch (item.Offer.OfferType)
